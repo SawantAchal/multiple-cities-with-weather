@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import L from 'leaflet';
-import sunnyIcon from '../assets/sunny1.jpg';
+import sunnyIcon from '../assets/sunny3.jpg';
 import rainyIcon from '../assets/rainyF.jpg';
 import cloudyIcon from '../assets/cloudy1.jpg';
+import defaultImg from '../assets/default.jpg'
 
 const WeatherPage = () => {
   // States to manage weather data, unit of measurement, and map
@@ -76,6 +77,8 @@ const WeatherPage = () => {
     weatherIcon = rainyIcon;
   } else if (weatherData.weather[0].main === 'Clouds') {
     weatherIcon = cloudyIcon;
+  }else {
+    weatherIcon = defaultImg
   }
 
   // Inline styles for background image
@@ -110,6 +113,8 @@ const WeatherPage = () => {
           <p className="text-lg border p-2 rounded-lg mt-2">Atmospheric Pressure: <span className="font-bold">{weatherData.main.pressure}</span> hPa</p>
           <p className="text-lg border p-2 rounded-lg mt-2">High Temperature: <span className="font-bold">{weatherData.main.temp_max}</span></p>
           <p className="text-lg border p-2 rounded-lg mt-2">Low Temperature: <span className="font-bold">{weatherData.main.temp_min}</span></p>
+        <Link to="/" className="block mt-4 px-4 py-2 rounded border border-black hover:bg-blue-100  hover:text-black transition duration-300 text-center w-fit">Go Back to Home</Link>
+
         </div>
       </div>
       {/* Render map */}
