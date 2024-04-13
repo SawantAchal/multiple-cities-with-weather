@@ -93,23 +93,23 @@ const WeatherPage = () => {
     <div style={backgroundImageStyle} className="p-8 rounded-lg shadow-xl text-gray-800">
       <h1 className="text-3xl font-bold mb-4 text-center">Weather for : <span className='font-bold italic text-black underline'>{city}</span></h1>
       <div>
-        <div className="mb-4">
+        <div className="mb-4 flex items-center">
           {/* Unit selection dropdown */}
-          <label className="block mb-2 text-lg" htmlFor="unit">Select Unit:</label>
-          <select id="unit" value={unit} onChange={handleUnitChange} className="px-4 py-2 rounded-lg bg-white text-gray-900">
+          <label className="block mb-2 text-lg text-center" htmlFor="unit">Select Unit:</label>
+          <select id="unit" value={unit} onChange={handleUnitChange} className="px-4 py-2 rounded-lg bg-gray-500 text-white ml-2">
             <option value="metric">Metric (°C)</option>
             <option value="imperial">Imperial (°F)</option>
           </select>
         </div>
         {/* Display weather information */}
-        <div className='text-black'>
-          <p className="text-lg">Temperature: <span className="font-bold">{weatherData.main.temp}</span> {unit === 'metric' ? '°C' : '°F'}</p>
-          <p className="text-lg">Weather Description: <span className="font-bold">{weatherData.weather[0].description}</span></p>
-          <p className="text-lg">Humidity: <span className="font-bold">{weatherData.main.humidity}%</span></p>
-          <p className="text-lg">Wind Speed: <span className="font-bold">{weatherData.wind.speed}</span> m/s</p>
-          <p className="text-lg">Atmospheric Pressure: <span className="font-bold">{weatherData.main.pressure}</span> hPa</p>
-          <p className="text-lg">High Temperature: <span className="font-bold">{weatherData.main.temp_max}</span></p>
-          <p className="text-lg">Low Temperature: <span className="font-bold">{weatherData.main.temp_min}</span></p>
+        <div className='text-black w-fit  p-2 text-center ml-4'>
+          <p className="text-lg border p-2 rounded-lg">Temperature: <span className="font-bold">{weatherData.main.temp}</span> {unit === 'metric' ? '°C' : '°F'}</p>
+          <p className="text-lg border p-2 rounded-lg mt-2">Weather Description: <span className="font-bold">{weatherData.weather[0].description}</span></p>
+          <p className="text-lg border p-2 rounded-lg mt-2">Humidity: <span className="font-bold">{weatherData.main.humidity}%</span></p>
+          <p className="text-lg border p-2 rounded-lg mt-2">Wind Speed: <span className="font-bold">{weatherData.wind.speed}</span> m/s</p>
+          <p className="text-lg border p-2 rounded-lg mt-2">Atmospheric Pressure: <span className="font-bold">{weatherData.main.pressure}</span> hPa</p>
+          <p className="text-lg border p-2 rounded-lg mt-2">High Temperature: <span className="font-bold">{weatherData.main.temp_max}</span></p>
+          <p className="text-lg border p-2 rounded-lg mt-2">Low Temperature: <span className="font-bold">{weatherData.main.temp_min}</span></p>
         </div>
       </div>
       {/* Render map */}

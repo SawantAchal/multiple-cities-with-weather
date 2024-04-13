@@ -9,7 +9,10 @@ const CityTable = () => {
   const [timeZones, setTimeZones] = useState([]);
   const [filteredCities, setFilteredCities] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [favorites, setFavorites] = useState([]);
+  const [favorites, setFavorites] = useState(() => {
+    const savedFavorites = localStorage.getItem('favorites');
+    return savedFavorites ? JSON.parse(savedFavorites) : [];
+  });
   const [sortOrder, setSortOrder] = useState('ascending');
 
   useEffect(() => {
@@ -38,6 +41,10 @@ const CityTable = () => {
 
     fetchData();
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+  }, [favorites]);
 
   const handleSearchChange = (event) => {
     const query = event.target.value;
@@ -88,19 +95,19 @@ const CityTable = () => {
   };
 
   return (
-    <div className="city-table-container bg-cover bg-center bg-fixed " style={{ backgroundImage: `url(${bgHome})` }}>
+    <div className="city-table-container bg-cover bg-center bg-fixed" style={{ backgroundImage: `url(${bgHome})` }}>
       <div className="container mx-auto p-4 bg-white bg-opacity-40 rounded-lg shadow-lg">
         <h1 className="text-3xl font-semibold mb-4 text-center">LIST OF CITIES</h1>
-        <div className="flex justify-between items-center mb-4">
-          <div className="flex items-center space-x-4">
+        <div className="flex flex-col lg:flex-row justify-between items-center mb-4">
+          <div className="flex items-center space-x-4 mb-4 lg:mb-0">
             <label htmlFor="sortOrder" className="font-bold text-lg">Sort Cities:</label>
             <select id="sortOrder" value={sortOrder} onChange={handleSortOrderChange} className="border border-black rounded px-2 py-1">
               <option value="ascending">Ascending</option>
               <option value="descending">Descending</option>
             </select>
           </div>
-          <input type='text' placeholder='Search for a city...' value={searchQuery} onChange={handleSearchChange} className="border border-gray-300 rounded px-4 py-2" />
-          <Link to="/favorite" className="py-2 px-4 font-bold rounded border border-black hover:bg-blue-100  hover:text-black transition duration-300 " style={{ textDecoration: 'none' }}>Favorite Locations</Link>
+          <input type='text' placeholder='Search for a city...' value={searchQuery} onChange={handleSearchChange} className="border border-gray-300 rounded px-4 py-2 mb-4 lg:mb-0" />
+          <Link to="/favorite" className="py-2 px-4 font-bold rounded border border-black hover:bg-blue-100  hover:text-black transition duration-300" style={{ textDecoration: 'none' }}>Favorite Locations</Link>
         </div>
         <div className="overflow-x-auto">
           {filteredCities.length > 0 ? (
@@ -138,16 +145,6 @@ const CityTable = () => {
 };
 
 export default CityTable;
-
-
-
-
-
-
-
-
-
-
 
 
 
