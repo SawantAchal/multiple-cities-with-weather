@@ -40,6 +40,7 @@ const WeatherPage = () => {
           throw new Error('Failed to fetch weather data');
         }
         const data = await response.json();
+        console.log(data)
         setForecastData(data);
       } catch (error) {
         console.error('Error fetching weather data:', error);
@@ -77,21 +78,38 @@ const WeatherPage = () => {
     if (!forecastData) {
       return <div>Loading forecast...</div>;
     }
+
+    //to change date format from forecast 
+    const formatDate = (dateString) => {
+      const date = new Date(dateString);
+      // Get the month and day
+      const month = date.toLocaleString('default', { month: 'short' });
+      const day = date.getDate();
+      return `${month}/${day}`;
+    };
+
+      // Extract unique dates from the forecast data
+    const uniqueDates = [...new Set(forecastData.list.map(item => item.dt_txt.split(' ')[0]))];
+
     return (
-      <div className="mt-8 text-black bg-gray-400 bg-opacity-25 rounded-lg">
-        <h2 className="text-xl font-bold mb-2">Forecast for the next 6 days: {city}</h2>
-        <div className="grid grid-cols-3 gap-4">
-          {forecastData.list.slice(0, 6).map((forecast, index) => (
-            <div key={index} className="border border-gray-300 p-4 rounded-lg">
-              <p className="text-lg font-bold mb-2">Date: {forecast.dt_txt}</p>
+    <div className="mt-8 text-black bg-gray-400 bg-opacity-25 rounded-lg">
+      <h2 className="text-xl font-bold mb-2">Forecast for the next 6 days: {city}</h2>
+      <div className="md:grid md:grid-cols-3 md:gap-4">
+        {uniqueDates.slice(0, 6).map((date, index) => {
+          // Find the forecast entry for the current date
+          const forecast = forecastData.list.find(item => item.dt_txt.split(' ')[0] === date);
+          return (
+            <div key={index} className="border border-gray-300 p-4 rounded-lg mt-1  ">
+              <p className="text-lg font-bold mb-2">Date: {formatDate(date)}</p>
               <p className="text-lg mb-2">Weather Desc: {forecast.weather[0].description}</p>
               <p className="text-lg mb-2">Temp: {forecast.main.temp} {unit === 'metric' ? '°C' : '°F'}</p>
             </div>
-          ))}
-        </div>
+          );
+        })}
       </div>
-    );
-  };
+    </div>
+  );
+};
 
   // Inline styles for background image
   const backgroundImageStyle = {
@@ -117,11 +135,11 @@ const WeatherPage = () => {
       </div>
       {/* Weather information */}
       <div className='text-black w-fit p-9 text-center ml-4 grid grid-cols-2 md:grid-cols-4 gap-4 bg-gray-400 bg-opacity-25 rounded-lg '>
-        <p className="text-lg border p-2 rounded-lg">Temperature: <span className="font-bold">{weatherData.main.temp}</span> {unit === 'metric' ? '°C' : '°F'}</p>
-        <p className="text-lg border p-2 rounded-lg">Weather Description: <span className="font-bold">{weatherData.weather[0].description}</span></p>
+        <p className="text-lg border p-2 rounded-lg">Temp.: <span className="font-bold">{weatherData.main.temp}</span> {unit === 'metric' ? '°C' : '°F'}</p>
+        <p className="text-lg border p-2 rounded-lg">Weather Desc.: <span className="font-bold">{weatherData.weather[0].description}</span></p>
         <p className="text-lg border p-2 rounded-lg">Humidity: <span className="font-bold">{weatherData.main.humidity}%</span></p>
         <p className="text-lg border p-2 rounded-lg">Wind Speed: <span className="font-bold">{weatherData.wind.speed}</span> m/s</p>
-        <p className="text-lg border p-2 rounded-lg">Atmospheric Pressure: <span className="font-bold">{weatherData.main.pressure}</span> hPa</p>
+        <p className="text-lg border p-2 rounded-lg">Atmos. Press.: <span className="font-bold">{weatherData.main.pressure}</span> hPa</p>
         <p className="text-lg border p-2 rounded-lg">High Temp: <span className="font-bold">{weatherData.main.temp_max}</span></p>
         <p className="text-lg border p-2 rounded-lg">Low Temp: <span className="font-bold">{weatherData.main.temp_min}</span></p>
       </div>
