@@ -6,11 +6,13 @@ import cloudyIcon from '../assets/cloudy1.jpg';
 import defaultImg from '../assets/default.jpg';
 
 const WeatherPage = () => {
+  // State variables
   const [weatherData, setWeatherData] = useState(null);
   const [forecastData, setForecastData] = useState(null);
   const [unit, setUnit] = useState('metric');
   const { city } = useParams();
 
+  // Fetch weather data when component mounts or city/unit changes
   useEffect(() => {
     const fetchWeatherData = async () => {
       try {
@@ -28,6 +30,7 @@ const WeatherPage = () => {
     fetchWeatherData();
   }, [city, unit]);
 
+  // Fetch forecast data when component mounts or city/unit changes
   useEffect(() => {
     const fetchForecastData = async () => {
       try {
@@ -45,14 +48,17 @@ const WeatherPage = () => {
     fetchForecastData();
   }, [city]);
 
+  // Function to handle unit change
   const handleUnitChange = (event) => {
     setUnit(event.target.value);
   };
 
+  // If weather data is not yet fetched, display loading message
   if (!weatherData) {
     return <div>Loading...</div>;
   }
 
+  // Determine weather icon based on weather data
   let weatherIcon;
   if (weatherData.weather[0].main === 'Clear') {
     weatherIcon = sunnyIcon;
@@ -66,6 +72,7 @@ const WeatherPage = () => {
     weatherIcon = defaultImg;
   }
 
+  // Function to render forecast
   const renderForecast = () => {
     if (!forecastData) {
       return <div>Loading forecast...</div>;
@@ -86,6 +93,7 @@ const WeatherPage = () => {
     );
   };
 
+  // Inline styles for background image
   const backgroundImageStyle = {
     backgroundImage: `url(${weatherIcon})`,
     backgroundSize: 'cover',
@@ -97,7 +105,9 @@ const WeatherPage = () => {
 
   return (
     <div style={backgroundImageStyle} className="p-8 rounded-lg shadow-xl ">
+      {/* Title */}
       <h1 className="text-3xl font-bold mb-4 text-center">Weather for : <span className='font-bold italic text-black underline'>{city}</span></h1>
+      {/* Unit selection */}
       <div className="mb-4 flex items-center justify-center">
         <label className="block mb-2 text-lg" htmlFor="unit">Select Unit:</label>
         <select id="unit" value={unit} onChange={handleUnitChange} className="px-4 py-2 rounded-lg bg-transparent border border-black text-black ml-2">
@@ -105,6 +115,7 @@ const WeatherPage = () => {
           <option value="imperial">Imperial (°F)</option>
         </select>
       </div>
+      {/* Weather information */}
       <div className='text-black w-fit p-9 text-center ml-4 grid grid-cols-2 md:grid-cols-4 gap-4 bg-gray-400 bg-opacity-25 rounded-lg '>
         <p className="text-lg border p-2 rounded-lg">Temperature: <span className="font-bold">{weatherData.main.temp}</span> {unit === 'metric' ? '°C' : '°F'}</p>
         <p className="text-lg border p-2 rounded-lg">Weather Description: <span className="font-bold">{weatherData.weather[0].description}</span></p>
@@ -114,11 +125,12 @@ const WeatherPage = () => {
         <p className="text-lg border p-2 rounded-lg">High Temp: <span className="font-bold">{weatherData.main.temp_max}</span></p>
         <p className="text-lg border p-2 rounded-lg">Low Temp: <span className="font-bold">{weatherData.main.temp_min}</span></p>
       </div>
+      {/* Forecast */}
       {renderForecast()}
+      {/* Link to Home */}
       <Link to="/" className="block mt-4 px-4 py-2 rounded border border-black hover:bg-blue-100 hover:text-black transition duration-300 text-center w-fit mx-auto">Go Back to Home</Link>
     </div>
   );
 };
 
 export default WeatherPage;
-
