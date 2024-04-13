@@ -93,13 +93,13 @@ const WeatherPage = () => {
 
   // Render weather information
   return (
-    <div style={backgroundImageStyle} className="p-8 rounded-lg shadow-xl text-gray-800">
+    <div style={backgroundImageStyle} className="p-8 rounded-lg shadow-xl ">
       <h1 className="text-3xl font-bold mb-4 text-center">Weather for : <span className='font-bold italic text-black underline'>{city}</span></h1>
       <div>
         <div className="mb-4 flex items-center">
           {/* Unit selection dropdown */}
           <label className="block mb-2 text-lg text-center" htmlFor="unit">Select Unit:</label>
-          <select id="unit" value={unit} onChange={handleUnitChange} className="px-4 py-2 rounded-lg bg-gray-500 text-white ml-2">
+          <select id="unit" value={unit} onChange={handleUnitChange} className="px-4 py-2 rounded-lg bg-transparent border border-black text-black ml-2">
             <option value="metric">Metric (°C)</option>
             <option value="imperial">Imperial (°F)</option>
           </select>
