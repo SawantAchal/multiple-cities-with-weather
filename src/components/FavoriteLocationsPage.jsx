@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import FavoriteButton from './FavoriteButton';
+import bg from '../assets/home.gif'
 
 const FavoriteLocationsPage = () => {
   // State to manage favorite locations
@@ -33,7 +35,7 @@ const FavoriteLocationsPage = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4 bg-cover bg-center bg-fixed h-screen" style={{ backgroundImage: `url(${bg})` }}>
       {/* Title */}
       <h1 className="text-3xl font-semibold mb-4 text-center">Favorite Locations</h1>
       <div className="overflow-x-auto">
@@ -61,6 +63,8 @@ const FavoriteLocationsPage = () => {
           </tbody>
         </table>
       </div>
+      {/* Button to go back to home page */}
+      <Link to="/" className="block mt-4 px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-700 transition duration-300 text-center">Go Back to Home</Link>
     </div>
   );
 };
