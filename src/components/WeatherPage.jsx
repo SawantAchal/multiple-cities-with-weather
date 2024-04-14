@@ -88,6 +88,16 @@ const WeatherPage = () => {
       return `${month}/${day}`;
     };
 
+      // Convert temperature from Celsius to Fahrenheit
+  const convertToImperial = (temp) => {
+    return (temp - 273.15) * 9/5 + 32;
+  };
+
+  // Convert temperature from Fahrenheit to Celsius
+  const convertToMetric = (temp) => {
+    return (temp - 273.15)
+  };
+
       // Extract unique dates from the forecast data
     const uniqueDates = [...new Set(forecastData.list.map(item => item.dt_txt.split(' ')[0]))];
 
@@ -102,7 +112,7 @@ const WeatherPage = () => {
             <div key={index} className="border border-gray-300 p-4 rounded-lg mt-1  ">
               <p className="text-lg font-bold mb-2">Date: {formatDate(date)}</p>
               <p className="text-lg mb-2">Weather Desc: {forecast.weather[0].description}</p>
-              <p className="text-lg mb-2">Temp: {forecast.main.temp} {unit === 'metric' ? '°C' : '°F'}</p>
+              <p className="text-lg mb-2">Temp: {unit === 'metric' ? convertToMetric(forecast.main.temp).toFixed(1) : convertToImperial(forecast.main.temp).toFixed(1)} {unit === 'metric' ? '°C' : '°F'}</p>
             </div>
           );
         })}
