@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import sunnyIcon from '../assets/sunny3.jpg';
+import sunnyIcon from '../assets/sunny4.gif';
 import rainyIcon from '../assets/rainyF.jpg';
 import cloudyIcon from '../assets/cloudy1.jpg';
 import defaultImg from '../assets/default.jpg';
@@ -22,6 +22,7 @@ const WeatherPage = () => {
           throw new Error('Failed to fetch weather data');
         }
         const data = await response.json();
+        console.log(data)
         setWeatherData(data);
       } catch (error) {
         console.error('Error fetching weather data:', error);
