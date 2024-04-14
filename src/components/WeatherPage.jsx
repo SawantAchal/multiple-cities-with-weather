@@ -106,7 +106,7 @@ const WeatherPage = () => {
     <div className="mt-8 text-black bg-gray-400 bg-opacity-25 rounded-lg">
       <h2 className="text-xl font-bold mb-2">Forecast for the next 6 days: {city}</h2>
       <div className="md:grid md:grid-cols-3 md:gap-4">
-        {uniqueDates.slice(0, 6).map((date, index) => {
+        {uniqueDates.slice(1, 6).map((date, index) => {
           // Find the forecast entry for the current date
           const forecast = forecastData.list.find(item => item.dt_txt.split(' ')[0] === date);
           return (
